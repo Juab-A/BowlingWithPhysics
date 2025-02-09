@@ -23,8 +23,8 @@ public class BallController : MonoBehaviour
     }
 
     private void LaunchBall() {
-        if (isBallLaunched) return;
-        isBallLaunched = true;
+        if (isBallLaunched) return; //Do nothing if launched
+        isBallLaunched = true; //Mark True when function is running
         ballRb.AddForce(transform.forward * force, ForceMode.Impulse);
     }
 
