@@ -6,6 +6,7 @@ public class BallController : MonoBehaviour
     [SerializeField] private float force = 1f;
     [SerializeField] private InputManager inputManager;
     [SerializeField] private Transform ballAnchor;
+    [SerializeField] private Transform launchIndicator;
     
 
     private Rigidbody ballRb;
@@ -30,7 +31,8 @@ public class BallController : MonoBehaviour
         isBallLaunched = true; //Mark True when function is running
         transform.parent = null; //Remove parent so that the ball doesn't take the parent with it
         ballRb.isKinematic = false; //Set "IsKinematic" to false so that the ball can collide/perform via physics engine
-        ballRb.AddForce(transform.forward * force, ForceMode.Impulse);
+        ballRb.AddForce(launchIndicator.transform.forward * force, ForceMode.Impulse);
+        launchIndicator.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
