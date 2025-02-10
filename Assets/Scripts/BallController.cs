@@ -25,15 +25,18 @@ public class BallController : MonoBehaviour
         ballRb.isKinematic = true;
 
         Cursor.lockState = CursorLockMode.Locked;
-        ResetBall();
+        //ResetBall();
 
     }
 
     private void LaunchBall() {
         if (isBallLaunched) return; //Do nothing if launched
+
         isBallLaunched = true; //Mark True when function is running
+
         transform.parent = null; //Remove parent so that the ball doesn't take the parent with it
         ballRb.isKinematic = false; //Set "IsKinematic" to false so that the ball can collide/perform via physics engine
+
         ballRb.AddForce(launchIndicator.transform.forward * force, ForceMode.Impulse);
         launchIndicator.gameObject.SetActive(false);
     }
@@ -41,7 +44,8 @@ public class BallController : MonoBehaviour
     public void ResetBall() {
         isBallLaunched = false;
 
-        ballRb.isKinematic = false;
+        ballRb.linearVelocity = Vector3.zero;
+        ballRb.isKinematic = true;
         launchIndicator.gameObject.SetActive(true);
         transform.parent = ballAnchor;
         transform.localPosition = Vector3.zero;

@@ -1,4 +1,5 @@
 using TMPro;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -14,13 +15,20 @@ public class GameManager : MonoBehaviour
 
 
     private FallTrigger[] fallTriggers;
-    private GameObject pinObjects;
+    [SerializeField] private GameObject pinObjects;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         inputManager.OnResetPressed.AddListener(HandleReset);
 
+        //Add the Increment Score function as a listener
+        //to the OnPinfall Event of each new pin
+        fallTriggers = FindObjectsByType<FallTrigger>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+
+        foreach (FallTrigger pin in fallTriggers) {
+            pin.OnPinFall.AddListener(IncrementScore);
+        }
     }
 
     private void HandleReset()
@@ -40,6 +48,8 @@ public class GameManager : MonoBehaviour
 
         //Instantiate a new set of pins
         pinObjects = Instantiate(pinCollection, pinAnchor.transform.position, Quaternion.identity, transform);
+
+        
 
         //Add the Increment Score function as a listener
         //to the OnPinfall Event of each new pin
